@@ -85,23 +85,4 @@ int main(void) {
     printHeap("3) After removing X");
 
     return 0;
-
-B
-B
-B
-B
-B
-B
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
 }
