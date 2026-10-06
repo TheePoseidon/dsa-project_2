@@ -1,17 +1,3 @@
-D
-D
-D
-
-B
-A
-A
-A
-A
-B
-B
-
-C
-C
 #include <stdio.h>
 
 #define MAX 32
@@ -99,23 +85,4 @@ int main(void) {
     printHeap("3) After removing X");
 
     return 0;
-
-B
-B
-B
-B
-B
-B
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
-A
 }
