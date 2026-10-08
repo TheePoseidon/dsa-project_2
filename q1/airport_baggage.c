@@ -1,18 +1,17 @@
-#include <stdio.h>
+# include <stdio.h>
+#define max 32
 
-#define MAX 32
-
-typedef struct { char id; int pr; } Container;
-
-Container heap[MAX];
+typedef struct {char id; int pr; } Container;
+Container heap[max];
 int n = 0;
 
-static void swap(Container *a, Container *b) { Container t = *a; *a = *b; *b = t; }
+
+static void swap(Container *a, Container *b) {Container t = *a; *a = *b; *b =t;}
 
 void heapifyDown(int i) {
     for (;;) {
-        int l = 2*i + 1, r = 2*i + 2, big = i;
-        if (l < n && heap[l].pr > heap[big].pr) big = l;
+        int 1 = 2*i + 1, r = 2*i + 2, big = i;
+        if (1 < n && heap[1].pr > heap[big].pr) big = 1;
         if (r < n && heap[r].pr > heap[big].pr) big = r;
         if (big == i) return;
         swap(&heap[i], &heap[big]);
@@ -23,14 +22,14 @@ void heapifyDown(int i) {
 void heapifyUp(int i) {
     while (i > 0) {
         int p = (i - 1) / 2;
-        if (heap[p].pr >= heap[i].pr) return;
-        swap(&heap[p], &heap[i]);
+        if (heap[i].pr <= heap[p].pr) return;
+        swap(&heap[i], &heap[p]);
         i = p;
     }
 }
 
-void buildHeap(void) {
-    for (int i = n/2 - 1; i >= 0; i--) heapifyDown(i);
+void buildHeap(Void) {
+    for (int i = n / 2 - 1; i >= 0; i--) heapifyDown(i);
 }
 
 void insert(char id, int pr) {
@@ -39,8 +38,8 @@ void insert(char id, int pr) {
 }
 
 int removeById(char id) {
-    for (int i = 0; i < n; i++) {
-        if (heap[i].id == id) {
+    for (int i = 0; i < n; i ++) {
+        if (heap[i].id == id){
             heap[i] = heap[--n];
             if (i < n) { heapifyDown(i); heapifyUp(i); }
             return 1;
@@ -49,15 +48,15 @@ int removeById(char id) {
     return 0;
 }
 
-void printHeap(const char *title) {
-    printf("%s\n  Array: ", title);
-    for (int i = 0; i < n; i++) printf("%c(%d) ", heap[i].id, heap[i].pr);
-    printf("\n  Tree:\n");
+void printheap( const char * title) {
+    printf("%s\n Array: ", title);
+    for ( int  i = 0; i < n; i ++ ) printf("(%c(%d))", heap[i].id, heap[i].pr);
+    printf("\n Tree:\n");
     int level = 0, count = 1;
-    for (int i = 0; i < n; ) {
-        printf("   L%d: ", level++);
+    for (int i = 0;  i < n; ){
+        printf("L%d: ", level++);
         for (int j = 0; j < count && i < n; j++, i++)
-            printf("%c(%d)  ", heap[i].id, heap[i].pr);
+            printf("(%c(%d))", heap[i].id, heap[i].pr);
         printf("\n");
         count *= 2;
     }
@@ -65,24 +64,23 @@ void printHeap(const char *title) {
 }
 
 int main(void) {
-    int P[] = {56, 23, 91, 34, 72, 48, 85, 17, 63, 79, 42};
-    int size = sizeof P / sizeof P[0];
-
-    for (int i = 0; i < size; i++) {
+    int p[] = { 56,  23, 91, 34, 72, 48, 85, 17, 63, 79, 42};
+    int size = sizeof p / sizeof p[0];
+    for (int i = 0 ; i < size; i++) {
         heap[i].id = 'A' + i;
-        heap[i].pr = P[i];
+        heap[i].pr = p[i];
     }
     n = size;
-    printHeap("Initial array (not a heap)");
+    printHeap("Initial array");
 
     buildHeap();
-    printHeap("1) After Max-Heap construction");
+    printHeap("After buildHeap");
 
-    insert('X', 100);
-    printHeap("2) After inserting X(100)");
+    insert('x', 100);
+    printHeap("After insert x(100)");
 
-    removeById('X');
-    printHeap("3) After removing X");
+    removeById('x');
+    printHeap("After remove x");
 
     return 0;
 }
