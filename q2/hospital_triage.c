@@ -1,15 +1,14 @@
-#include <stdio.h>
-#include <string.h>
-
-#define MAX 32
+# include <stdio.h>
+# include <stdlib.h>
+#define max 32
 
 typedef struct {
-    char id[8];
-    char name[24];
-    int  pr;
+    char id [8];
+    char name [24];
+    int pr;
 } Patient;
 
-Patient heap[MAX];
+Patient heap [max];
 int n = 0;
 
 static void swap(Patient *a, Patient *b) {
@@ -30,94 +29,96 @@ void heapifyDown(int i) {
 void heapifyUp(int i) {
     while (i > 0) {
         int p = (i - 1) / 2;
-        if (heap[p].pr >= heap[i].pr) return;
-        swap(&heap[p], &heap[i]);
+        if (heap[i].pr <= heap[p].pr) return;
+        swap(&heap[i], &heap[p]);
         i = p;
     }
 }
 
 void buildHeap(void) {
-    for (int i = n/2 - 1; i >= 0; i--) heapifyDown(i);
+    for (int i = n / 2 - 1; i >= 0; i--) heapifyDown(i);
 }
 
-void insert(const char *id, const char *name, int pr) {
-    if (n >= MAX) { printf("Heap full\n"); return; }
+void insert (const char *id, const char *name, int pr) {
+    if (n >= max) {
+        printf("Heap is full\n");
+        return;
+    }
+
     strcpy(heap[n].id, id);
     strcpy(heap[n].name, name);
     heap[n].pr = pr;
     heapifyUp(n++);
 }
 
-Patient extractMax(void) {
+Patient exttractMax(void){
     Patient top = heap[0];
     heap[0] = heap[--n];
     if (n > 0) heapifyDown(0);
     return top;
 }
 
-int removeById(const char *id) {
-    for (int i = 0; i < n; i++) {
+int removeById (const char *id) {
+    for (int i = 0; i < n; i++){
         if (strcmp(heap[i].id, id) == 0) {
-            heap[i] = heap[--n];
-            if (i < n) { heapifyDown(i); heapifyUp(i); }
+            heap [i] = heap [--n];
+            if (i < n) {
+                heapifyDown(i);
+                heapifyUp(i);
+            }
             return 1;
         }
     }
     return 0;
 }
 
-void printHeap(const char *title) {
-    printf("%s\n  Array: ", title);
+int printHeap(const char *title){
+    printf("%s\n Array: ", title);
     for (int i = 0; i < n; i++)
-        printf("[%s %s %d] ", heap[i].id, heap[i].name, heap[i].pr);
-    printf("\n  Tree:\n");
+        printf("%s(%d) ", heap[i].id, heap[i].pr, heap[i].name);
+    printf("\n Tree:\n");
     int level = 0, count = 1;
     for (int i = 0; i < n; ) {
-        printf("   L%d: ", level++);
+        printf("L%d: ", level++);
         for (int j = 0; j < count && i < n; j++, i++)
-            printf("%s %s(%d)  ", heap[i].id, heap[i].name, heap[i].pr);
+            printf("%s(%d) ", heap[i].id, heap[i].pr, heap[i].name);
         printf("\n");
         count *= 2;
     }
     printf("\n");
 }
 
-int main(void) {
-    const char *ids[]   = {"P01","P02","P03","P04","P05","P06","P07"};
-    const char *names[] = {"Amina","Daniel","Eric","Grace","Hassan","Irene","Jean"};
-    int scores[]        = {72, 45, 91, 63, 88, 54, 76};
+int main (void) {
+    const char *ids[] = {"PO1", "PO2", "PO3", "PO4", "PO5", "PO6", "PO7"};
+    const char *names[] = {"Amina", "Daniel", "Eric", "Grace", "Hassan", "Irene", "Jean"};
+    int scores[] = {72, 45, 91, 63, 88, 54, 76};
     int size = 7;
-
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++){
         strcpy(heap[i].id, ids[i]);
         strcpy(heap[i].name, names[i]);
         heap[i].pr = scores[i];
     }
+
     n = size;
-    printHeap("Initial array (not a heap)");
-
+    printHeap("Before buildHeap");
     buildHeap();
-    printHeap("1) After Max-Heap construction");
-
-    Patient backup[MAX];
+    printHeap("After buildHeap");
+    Patient backup[max];
     int backupN = n;
-    memcpy(backup, heap, sizeof heap);
-
-    printf("2) Treatment order:\n");
+    memcpy(backup, heap, sizeof(heap));
+    printf("Order of treatment:\n");
     while (n > 0) {
-        Patient p = extractMax();
-        printf("   Patient %s %s - Priority %d\n", p.id, p.name, p.pr);
+        Patient p = exttractMax();
+        printf("Patient %s %s Priority %d\n", p.id, p.name, p.pr);
     }
     printf("\n");
 
-    memcpy(heap, backup, sizeof heap);
+    memcpy(heap, backup, sizeof(heap));
     n = backupN;
+    insert("PO8", "Kofi", 98);
+    printHeap("After inserting Kofi");
+    removeById("PO8");
+    printHeap("After removing Kofi");
 
-    insert("P08", "Kofi", 98);
-    printHeap("3) After inserting P08 Kofi (98)");
-
-    removeById("P08");
-    printHeap("4) After removing P08");
-
-    return 0;
+    retrnm 0;
 }
