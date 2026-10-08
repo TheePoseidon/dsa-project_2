@@ -10,8 +10,8 @@ static void swap(Container *a, Container *b) {Container t = *a; *a = *b; *b =t;}
 
 void heapifyDown(int i) {
     for (;;) {
-        int 1 = 2*i + 1, r = 2*i + 2, big = i;
-        if (1 < n && heap[1].pr > heap[big].pr) big = 1;
+        int l = 2*i + 1, r = 2*i + 2, big = i;
+        if (l < n && heap[l].pr > heap[big].pr) big = l;
         if (r < n && heap[r].pr > heap[big].pr) big = r;
         if (big == i) return;
         swap(&heap[i], &heap[big]);
@@ -28,7 +28,7 @@ void heapifyUp(int i) {
     }
 }
 
-void buildHeap(Void) {
+void buildHeap(void) {
     for (int i = n / 2 - 1; i >= 0; i--) heapifyDown(i);
 }
 
@@ -48,7 +48,7 @@ int removeById(char id) {
     return 0;
 }
 
-void printheap( const char * title) {
+void printHeap( const char * title) {
     printf("%s\n Array: ", title);
     for ( int  i = 0; i < n; i ++ ) printf("(%c(%d))", heap[i].id, heap[i].pr);
     printf("\n Tree:\n");
