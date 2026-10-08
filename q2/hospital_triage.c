@@ -120,5 +120,5 @@ int main (void) {
     removeById("PO8");
     printHeap("After removing Kofi");
 
-    retrnm 0;
+    return 0;
 }
