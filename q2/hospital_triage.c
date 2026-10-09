@@ -1,5 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 #define max 32
 
 typedef struct {
@@ -75,13 +76,13 @@ int removeById (const char *id) {
 int printHeap(const char *title){
     printf("%s\n Array: ", title);
     for (int i = 0; i < n; i++)
-        printf("%s(%d) ", heap[i].id, heap[i].pr, heap[i].name);
+        printf("%s(%d)%s ", heap[i].id, heap[i].pr, heap[i].name);
     printf("\n Tree:\n");
     int level = 0, count = 1;
     for (int i = 0; i < n; ) {
         printf("L%d: ", level++);
         for (int j = 0; j < count && i < n; j++, i++)
-            printf("%s(%d) ", heap[i].id, heap[i].pr, heap[i].name);
+            printf("%s(%d)%s ", heap[i].id, heap[i].pr, heap[i].name);
         printf("\n");
         count *= 2;
     }
