@@ -110,7 +110,7 @@ int main (void) {
     printf("Order of treatment:\n");
     while (n > 0) {
         Patient p = exttractMax();
-        printf("Patient %s %s Priority %d\n", p.id, p.name, p.pr);
+        printf(" %s %s Priority %d\n", p.id, p.name, p.pr);
     }
     printf("\n");
 
